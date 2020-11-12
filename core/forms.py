@@ -14,4 +14,4 @@ class  AddressForm(forms.Form):
     street = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Street address'}))
     houseno = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'House address'}))
     pincode = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Pincode'}))
-    save_info = forms.BooleanField(widget=forms.CheckboxInput(attrs={'label':'SAVE-INFO'})) 
+    save_info = forms.BooleanField( label="Save Address") 

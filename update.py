@@ -6,7 +6,7 @@ if __name__ == "__main__":
     
     cmd.run("git add .", check=True, shell=True)
    
-    #print(cp)
+    
 
     
 
