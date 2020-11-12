@@ -1,17 +1,19 @@
-import subprocess
+import subprocess as cmd
 import os
 
 
-
-
 if __name__ == "__main__":
-    subprocess.Popen(["git", "add", "."],stdout=subprocess.PIPE)
+    
+    cmd.run("git add .", check=True, shell=True)
+   
+    #print(cp)
 
-    subprocess.Popen(["git", "status"],stdout=subprocess.PIPE)
+    
 
-    subprocess.Popen(["git", "commit", "-m", "updating" ,"e-cart"],stdout=subprocess.PIPE)
+    
 
-    subprocess.Popen(["git", "push", "-u", "origin", "master"],stdout=subprocess.PIPE)
+    cp = cmd.run("git commit -m 'update the repository'", check=True, shell=True)
+    cp = cmd.run("git push -u origin master -f", check=True, shell=True)
 
     
 
