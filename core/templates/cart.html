@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <main class="mt-5 pt-4">
+        <div class="container wow fadeIn">
+
+            <div >
+
+                <!-- Heading -->
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted">Your cart  <span class="badge badge-secondary badge-pill">{{total}}</span></span>
+                    
+                </h4>
+                
+                <!-- Cart -->
+                    <ul class="list-group mb-3 z-depth-1">
+                    {%for item in cart%}
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <h6 class="my-0">{{item.item.title}}</h6>
+                                <small class="text-muted">Brief description</small>
+                            </div>
+                            <div>
+                                <form class="d-flex justify-content-left" method="POST">
+                                    <!-- Default input -->
+                                    {% csrf_token %}
+                                    <input type="hidden" id="pk" name="pk" class="form-control" value={{item.id}}>
+                                    <input type="number" min="1" id="quantity" value={{item.quantity}} aria-label="Search" class="form-control" style="width: 100px" name="quantity">
+                                    <button class="btn btn-primary btn-md my-0 p" type="submit" name="update" value="1">Update</button>
+                                    <button class="btn btn-danger btn-md my-0 p" type="submit" name="remove" value="1">Remove</button>
+                                    
+                                </form>
+                            </div>    
+                            {%if item.item.dis_price%}
+                                <span class="text-muted"><del>{{item.item.price}}</del> {{item.item.dis_price}}</span>
+                            {%else%}
+                                <span class="text-muted">{{item.item.price}}</span>
+                            {%endif%}
+                            <div>
+                                <span class="text-muted ">{{item.cost}}</span>
+                            </div>    
+                        </li>
+                    {%endfor%}
+                        
+                        {% if discount %}
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0">Total</h6>
+                                </div>
+                                <div class="list-group-item d-flex justify-content-right lh-condensed">
+                                    
+                                        <h6 class="my-0">{{cost}}</h6>
+                                        
+                                        <small class="text-muted">You saved - {{discount}}</small>
+                                        
+                                </div>    
+                            </li>
+                        {% else %}
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0">Total</h6>
+                                </div>
+                                <div class="list-group-item d-flex justify-content-right lh-condensed">
+                                    
+                                        <h6 class="my-0">{{cost}}</h6>
+                                        
+                                        
+                                        
+                                </div>    
+                            </li>
+                        
+                        {% endif %}
+                    </ul>
+                
+                    
+            </div>
+        </div>
+    </main>              
+          <!-- Cart -->
+{% endblock content %}
