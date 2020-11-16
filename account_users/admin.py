@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User
+from .models import User,UserAddress
 from django.contrib.auth.models import Group
 # Register your models here.
 
@@ -28,6 +28,6 @@ class UserAdmin(BaseUserAdmin):
     ordering = ('username','email')
     filter_horizontal = ()
 
-
+admin.site.register(UserAddress)
 admin.site.register(User,UserAdmin)
 admin.site.unregister(Group)

@@ -8,17 +8,72 @@
       <!-- Heading -->
       <h2 class="my-5 h2 text-center">Checkout form</h2>
 
-      <!--Grid row-->
-      <div class="row">
+        <div class="col-md-6 mb-6">
 
-        <!--Grid column-->
-        <div class="col-md-8 mb-4">
+          <!-- Heading -->
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Your cart</span>
+            <span class="badge badge-secondary badge-pill">{{total}}</span>
+          </h4>
 
-          <!--Card-->
-          <div class="card">
+          <!-- Cart -->
+          <ul class="list-group mb-3 z-depth-1">
+            
+            {%for item in cartitems%}
+              <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                  <h6 class="my-0">{{item.item.title}}</h6>
+                </div>
+                <span class="text-muted">{{item.quantity}}</span>
+                <span class="text-muted">{{item.cost}}</span>
+              </li>
+            {%endfor%}  
+            
+            
+            {%if promo%}
+              <li class="list-group-item d-flex justify-content-between bg-light">
+                <div class="text-success">
+                  <h6 class="my-0">{{promo.name}}</h6>
+                  
+                </div>
+                <span class="text-success">-{{promo.discount}}</span>
+              </li>
+            {% endif %}  
+              <li class="list-group-item d-flex justify-content-between">
+                <span>Total </span>
+                <strong>{{cost}}</strong>
+              </li>
+          </ul>
+          <!-- Cart -->
+         
+          <!-- Promo code -->
+          <form method="POST" >
+            {% csrf_token %}
+            <div class="card col-md-12 mb-12">
+              <ul>
+              {%for promo in promos%}
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                  <div>
+                    <h6 class="my-0">{{promo.name}}</h6>
+                  </div>
+                  <span class="text-muted">Min amount-{{promo.min_amount}}</span>
+                  <button class="btn btn-secondary btn-md waves-effect m-0" type="submit" value="{{promo.id}}" name="redeem">Redeem</button>
+                </li>
+              {%endfor%}
+             </ul>    
+            </div>
+          </form>
+          <!-- Promo code -->
 
-            <!--Card content-->
-            <form class="card-body">
+        </div>
+        <br>
+        
+        
+        <div class="card col-md-6 mb-6">
+
+          
+            <form class="card-body" method = "POST">
+              {% csrf_token %}
 
               <!--Grid row-->
               <div class="row">
@@ -56,7 +111,7 @@
 
                   <!--firstName-->
                   <div class="md-form ">
-                    {{form1.street}}
+                    {{form1.houseno}}
                   </div>
 
                 </div>
@@ -67,7 +122,8 @@
 
                   <!--lastName-->
                   <div class="md-form">
-                    {{form1.houseno}}
+                    {{form1.street}}
+                    
                   </div>
 
                 </div>
@@ -91,146 +147,135 @@
               <!--Grid row-->
 
               <hr>
-
+              <button class="btn btn-primary btn-lg btn-block" type="submit" name="add" value="1">ADD ADDRESS</button>
               
-              <div class="row">
+              
+              <hr>
+            </form>
+        </div>
+        
+        
+        <br>
+        
+        
+        <div class="card col-md-6 mb-6">
+           <form class="card-body" method = "POST">
+              {% csrf_token %}
+              
+              {%for address in all_address%}
+              
+                <div class="row">
 
-                <!--Grid column-->
-                
-                <div class="col-lg-4 col-md-6 mb-4">
                   
-                     {{form1.save_info.label_tag}}          {{form1.save_info}}
+                  <div class="col-lg-4 col-md-5 ">
+
+                    
+                    <div class="md-form ">
+                      {{address.name}}
+                    </div>
+
+                  </div>
+                  
+                  <div class="col-lg-4 col-md-5 ">
+
+                    <!--lastName-->
+                    <div class="md-form">
+                      {{address.phoneno}}
+                    </div>
+
+                  </div>
+                  <div class="col-lg-4 col-md-2 ">
+                      <input type="checkbox" id="address" name="address" value="{{address.id}}">
+                      <label for="address"> Select</label><br>
+                  </div>
+                  
+
+                </div>
+                <!--Grid row-->
+
+                <!--Username-->
+                <div class="row">
+
+                  <!--Grid column-->
+                  <div class="col-lg-4 col-md-6">
+
+                    <!--firstName-->
+                    <div class="md-form ">
+                      {{address.houseno}}
+                    </div>
+
+                  </div>
+                  <!--Grid column-->
+
+                  <!--Grid column-->
+                  <div class="col-lg-4 col-md-6 ">
+
+                    <!--lastName-->
+                    <div class="md-form">
+                      {{address.street}}
+                      
+                    </div>
+
+                  </div>
+                  <!--Grid column-->
+
+                </div>
+                
+
+
+
+                <!--Grid row-->
+                <div class="row">
+
+                  <div class="col-lg-4 col-md-6 ">
+                      {{address.pincode}}
+
+                  </div>
+                  <!--Grid column-->
+
+                </div>
+                <hr>
+              {%endfor%}
+              <input type="hidden" id="address" name="address" value="">  
+              <div class="row">
+                <div class="col-lg-4 col-md-6 ">
+                      
+                        <select id="PAYMENT" name="payment">
+                          <option value="">PAYMENT OPTIONS</option>
+                          <option value="COD">Cash On Delivery</option>
+                          <option value="UPI">UPI</option>
+                          <option value="DC">Debit-Card</option>
+                          <option value="CC">Credit-Card</option>
+                        </select>
+
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-lg-4 col-md-6 ">
+                    <span>Total </span>
+                </div>    
+                <div class="col-lg-4 col-md-6 ">
+                   
                     
                 </div>
-
-               
+                <div class="col-lg-4 col-md-6 ">
+                   <strong>{{cost}}</strong>
+                    
+                </div>
                 
-
-              </div>
-
-              <hr>
-
-              <div class="d-block my-3">
-                <div class="custom-control custom-radio">
-                  <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-                  <label class="custom-control-label" for="credit">Credit card</label>
-                </div>
-                <div class="custom-control custom-radio">
-                  <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
-                  <label class="custom-control-label" for="debit">Debit card</label>
-                </div>
-                <div class="custom-control custom-radio">
-                  <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
-                  <label class="custom-control-label" for="paypal">Paypal</label>
-                </div>
-              </div>
+              <div>
+              <input id="promo" name="promo" type="hidden" value="{{promo.id}}">
+              <input id="cost" name="cost" type="hidden" value="{{cost}}">
+              
+              <hr>  
               <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="cc-name">Name on card</label>
-                  <input type="text" class="form-control" id="cc-name" placeholder="" required>
-                  <small class="text-muted">Full name as displayed on card</small>
-                  <div class="invalid-feedback">
-                    Name on card is required
-                  </div>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="cc-number">Credit card number</label>
-                  <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                  <div class="invalid-feedback">
-                    Credit card number is required
-                  </div>
-                </div>
+                <div class="col-lg-12  ">
+                  <button class="btn btn-primary btn-lg btn-block" type="submit" name="place" value="1">Place Order</button>
+                </div> 
               </div>
-              <div class="row">
-                <div class="col-md-3 mb-3">
-                  <label for="cc-expiration">Expiration</label>
-                  <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-                  <div class="invalid-feedback">
-                    Expiration date required
-                  </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                  <label for="cc-expiration">CVV</label>
-                  <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-                  <div class="invalid-feedback">
-                    Security code required
-                  </div>
-                </div>
-              </div>
-              <hr class="mb-4">
-              <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
-
             </form>
-
-          </div>
-          <!--/.Card-->
-
         </div>
-        <!--Grid column-->
-
-        <!--Grid column-->
-        <div class="col-md-4 mb-4">
-
-          <!-- Heading -->
-          <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-muted">Your cart</span>
-            <span class="badge badge-secondary badge-pill">3</span>
-          </h4>
-
-          <!-- Cart -->
-          <ul class="list-group mb-3 z-depth-1">
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Product name</h6>
-                <small class="text-muted">Brief description</small>
-              </div>
-              <span class="text-muted">$12</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Second product</h6>
-                <small class="text-muted">Brief description</small>
-              </div>
-              <span class="text-muted">$8</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Third item</h6>
-                <small class="text-muted">Brief description</small>
-              </div>
-              <span class="text-muted">$5</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between bg-light">
-              <div class="text-success">
-                <h6 class="my-0">Promo code</h6>
-                <small>EXAMPLECODE</small>
-              </div>
-              <span class="text-success">-$5</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Total (USD)</span>
-              <strong>$20</strong>
-            </li>
-          </ul>
-          <!-- Cart -->
-
-          <!-- Promo code -->
-          <form class="card p-2">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Promo code" aria-label="Recipient's username" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-secondary btn-md waves-effect m-0" type="button">Redeem</button>
-              </div>
-            </div>
-          </form>
-          <!-- Promo code -->
-
-        </div>
-        <!--Grid column-->
-
-      </div>
-      <!--Grid row-->
-
     </div>
   </main>
   <!--Main layout-->

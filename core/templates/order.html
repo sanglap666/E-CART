@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{%for item in order.items.all%}
+    {{item}}
+    
+{%endfor%}    
+{{order.user}}

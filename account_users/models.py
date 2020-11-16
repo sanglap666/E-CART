@@ -57,4 +57,15 @@ class User(AbstractBaseUser):
         
         return True
 
+class UserAddress(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    street = models.CharField(max_length=100)
+    houseno = models.CharField(max_length=100)
+    phoneno = models.CharField(max_length=10)
+    name = models.CharField(max_length=20)
+    pincode = models.CharField(max_length=7)
+
+    def __str__(self):
+        return self.user.username+"-" + self.name+"-" + self.phoneno
+    
 

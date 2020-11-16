@@ -42,34 +42,15 @@
                         </li>
                     {%endfor%}
                         
-                        {% if discount %}
-                            <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                <div>
-                                    <h6 class="my-0">Total</h6>
-                                </div>
-                                <div class="list-group-item d-flex justify-content-right lh-condensed">
-                                    
-                                        <h6 class="my-0">{{cost}}</h6>
-                                        
-                                        <small class="text-muted">You saved - {{discount}}</small>
-                                        
-                                </div>    
-                            </li>
-                        {% else %}
-                            <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                <div>
-                                    <h6 class="my-0">Total</h6>
-                                </div>
-                                <div class="list-group-item d-flex justify-content-right lh-condensed">
-                                    
-                                        <h6 class="my-0">{{cost}}</h6>
-                                        
-                                        
-                                        
-                                </div>    
-                            </li>
                         
-                        {% endif %}
+                            <li class="list-group-item d-flex justify-content lh-condensed">
+                                <div class="list-group-item d-flex justify-content lh-condensed">
+                                    <a class="btn btn-success" href="{% url 'products' %}" role="button">Continue Shopping</a>
+                                </div>
+                                <div class="list-group-item d-flex justify-content lh-condensed">
+                                    <a class="btn btn-warning" href="{% url 'checkout' %}" role="button">Checkout</a>
+                                </div>    
+                            </li>
                     </ul>
                 
                     
